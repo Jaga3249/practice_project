@@ -1,10 +1,10 @@
-import EmiCalculator from "../components/EmiCalculator";
+import Calculator from "../components/Calculator";
 
-const HomePage = () => {
+const page = () => {
   return (
-    <div className="h-[100vh] flex justify-center items-center bg-gray-200">
-      <EmiCalculator />
+    <div className="h-[100vh]">
+      <Calculator />
     </div>
   );
 };
-export default HomePage;
+export default page;

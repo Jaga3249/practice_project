@@ -3,7 +3,12 @@ import { useEffect, useRef, useState } from "react";
 
 const OtpInput = () => {
   const emptyArr = ["", "", "", ""];
-  const refs = emptyArr.map(() => useRef<HTMLInputElement>(null));
+  const refs: React.RefObject<HTMLInputElement>[] = [
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+  ];
   const [input, setInput] = useState(emptyArr);
   const [missed, setMissed] = useState<number[]>([]);
 
@@ -58,7 +63,6 @@ const OtpInput = () => {
     const final_data = missedItem.filter((item) => item != undefined);
     setMissed(final_data);
   };
-
   return (
     <div className="mt-10 ">
       <h1 className="text-2xl font-bold mb-3">Two-factor code input</h1>
