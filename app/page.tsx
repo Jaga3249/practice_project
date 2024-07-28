@@ -1,5 +1,9 @@
-import Image from "next/image";
+// import Image from "next/image";
 
 export default function Home() {
-  return <div className="bg-red-700">Home</div>;
+  return (
+    <div className="">
+      <button className="btn">Button</button>
+    </div>
+  );
 }
