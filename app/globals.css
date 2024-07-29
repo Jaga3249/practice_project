@@ -31,3 +31,7 @@ body {
     text-wrap: balance;
   }
 } */
+
+.transition-height {
+  transition: height 0.3s ease-in-out;
+}
