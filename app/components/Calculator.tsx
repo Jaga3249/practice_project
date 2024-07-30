@@ -37,6 +37,7 @@ const Calculator = () => {
     const clickedValue = target.id;
     if (clickedValue === "C") {
       setValue("");
+      setShowInputVal("");
     } else if (clickedValue === "=") {
       //calculate
       calculate();

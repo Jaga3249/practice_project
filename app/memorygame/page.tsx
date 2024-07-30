@@ -40,7 +40,6 @@ const Page = () => {
   };
   //   console.log(open);
   useEffect(() => {
-    console.log("call 1");
     setTimeout(() => {
       if (open.length === 2) {
         let id1 = open[0];
@@ -53,13 +52,10 @@ const Page = () => {
     }, 1000);
   }, [open]);
   useEffect(() => {
-    console.log("call 2");
     if (solved.length === 8) {
       setStage("win");
     }
   }, [solved]);
-
-  console.log("open", open);
 
   return (
     <div
