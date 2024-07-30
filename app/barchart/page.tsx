@@ -28,7 +28,6 @@ const Page = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
   useEffect(() => {
     if (freq.size > 0) {
       const Yarr = Array.from(freq.values());
