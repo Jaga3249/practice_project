@@ -3,7 +3,7 @@ import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import useWindowSize from "react-use/lib/useWindowSize";
 
-const page = () => {
+const Page = () => {
   const { width, height } = useWindowSize();
   const [matrixs, setMatrixs] = useState(Array(9).fill(null));
   const [isXTurn, setIsXTurn] = useState<boolean>(true);
@@ -99,4 +99,4 @@ const page = () => {
     </>
   );
 };
-export default page;
+export default Page;
