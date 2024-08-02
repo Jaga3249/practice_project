@@ -39,24 +39,30 @@ const Page = () => {
     setImages((prev) => [...prev, ...data]);
     setLoading(false);
     setPages((prev) => prev + 1);
-  }, [pages, loading]);
+  }, [pages]);
+
   useEffect(() => {
-    console.log("normal useeffect call");
-    fetchFirstPage();
-  }, []);
-  useEffect(() => {
-    console.log("render intersection", Date.now());
+    console.log("intersection useeffcet call", Date.now());
+    const observerOptions = {
+      root: null, // viewport
+      rootMargin: "0px",
+      threshold: 0.1, // trigger when 10% of the target is visible
+    };
     const observer = new IntersectionObserver((entries) => {
       const target = entries[0];
+      console.log(target.isIntersecting);
       if (target.isIntersecting) {
+        console.log("IntersectionObserver triggered");
         //call api for next page
+        // console.log("api call");
         getData();
       }
-    });
+    }, observerOptions);
 
     if (loaderRef.current) {
       observer.observe(loaderRef.current);
     }
+
     return () => {
       if (loaderRef.current) {
         observer.unobserve(loaderRef.current);
@@ -64,12 +70,22 @@ const Page = () => {
     };
   }, [getData]);
 
+  useEffect(() => {
+    console.log("normal useeffect call");
+    fetchFirstPage();
+  }, []);
+  console.log(pages);
+
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className=" h-auto flex flex-col items-center justify-center">
       <h1 className="font-serif text-3xl font-semibold pt-4">
         Infinite ScrollBar
       </h1>
-      <div className="grid grid-cols-3">
+      <div
+        className={`grid grid-cols-3  h-full ${
+          images.length === 0 && "invisible"
+        }`}
+      >
         {images &&
           images.map((item, i) => (
             <Image
@@ -81,7 +97,14 @@ const Page = () => {
             />
           ))}
       </div>
-      <div ref={loaderRef}>{loading && <h1>Loading...</h1>}</div>
+
+      <div ref={loaderRef} className="">
+        {loading ? (
+          <h1 className="text-2xl text-red-600 font-bold">Loading...</h1>
+        ) : (
+          "dggd"
+        )}
+      </div>
     </div>
   );
 };

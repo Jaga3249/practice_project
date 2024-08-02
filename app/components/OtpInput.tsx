@@ -1,97 +1,100 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  ClipboardEvent,
+  KeyboardEvent,
+  RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 const OtpInput = () => {
-  const emptyArr = ["", "", "", ""];
-  const refs: React.RefObject<HTMLInputElement>[] = [
+  const inputData = ["", "", "", ""];
+  const inputref: RefObject<HTMLInputElement>[] = [
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
   ];
-  const [input, setInput] = useState(emptyArr);
-  const [missed, setMissed] = useState<number[]>([]);
+  const [input, setInput] = useState<string[]>(inputData);
+  const [missedInput, setMissedInput] = useState<string[]>([]);
 
-  useEffect(() => {
-    refs[0].current?.focus();
-  }, []);
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
     const val = e.target.value;
-    const checkNum = /^\d$/.test(val);
-    if (!checkNum) {
-      return;
+    const numberVal = val.replace(/\D/g, "").slice(val.length - 1);
+    if (numberVal) {
+      if (index < input.length - 1) {
+        inputref[index + 1].current?.focus();
+      }
+      const copyInput = [...input];
+      copyInput[index] = numberVal;
+      setInput(copyInput);
     }
-    if (index < input.length - 1) {
-      refs[index + 1].current?.focus();
-    }
-    const copyInput = [...input];
-    copyInput[index] = val;
-    setInput(copyInput);
   };
-  const handleClear = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    index: any
-  ) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
     if (e.keyCode === 8) {
       const copyInput = [...input];
       copyInput[index] = "";
       setInput(copyInput);
       if (index > 0) {
-        refs[index - 1].current?.focus();
+        inputref[index - 1].current?.focus();
       }
     }
-  };
-  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-    const data = e.clipboardData.getData("text");
-    if (!Number(data || data.length != input.length)) {
-      return;
-    }
-    const copydata = data.split("");
-    setInput(copydata);
-    refs[input.length - 1].current?.focus();
   };
 
-  const handleSunmit = () => {
-    let missedItem = input.map((item, i) => {
-      if (item === "") {
-        return i;
-      }
-    });
-    const final_data = missedItem.filter((item) => item != undefined);
-    setMissed(final_data);
+  const handlepaste = (e: ClipboardEvent<HTMLInputElement>) => {
+    let clipboardData = e.clipboardData.getData("Text");
+    let numberPasteVal = clipboardData.replace(/\D/g, "");
+    if (numberPasteVal.length === input.length) {
+      const numVal = numberPasteVal.split("");
+      setInput(numVal);
+      inputref[input.length - 1].current?.focus();
+    }
   };
+
+  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (input.includes("")) {
+      let copyInput = [...input];
+      const missedInput = copyInput.filter((item) => item === "");
+      setMissedInput(missedInput);
+    } else {
+      alert("otp send sucessfully");
+      setInput(inputData);
+    }
+  };
+  useEffect(() => {
+    inputref[0].current?.focus();
+  }, []);
+  // console.log(input);
   return (
-    <div className="mt-10 ">
-      <h1 className="text-2xl font-bold mb-3">Two-factor code input</h1>
-      <div className="flex justify-center gap-2 ">
-        {emptyArr.map((item, i) => (
+    <form
+      className=" h-screen flex flex-col items-center justify-center gap-4"
+      onSubmit={handleSubmit}
+    >
+      <h1 className="font-serif text-4xl">Two-factor code input </h1>
+      <div className="flex gap-2 items-center">
+        {input.map((item, i) => (
           <input
-            ref={refs[i]}
             key={i}
-            value={input[i]}
             type="text"
-            maxLength={1}
-            className={`border-[1px] border-black w-12 h-12 rounded-md font-bold text-center text-xl  ${
-              missed.includes(i) ? "border-[1px] border-red-500" : ""
+            ref={inputref[i]}
+            // placeholder="Type here"
+            className={`input input-bordered max-w-xs w-14 h-14 text-center ${
+              missedInput.includes(item) ? "border-[1px] border-red-400" : ""
             }`}
             onChange={(e) => handleChange(e, i)}
-            onKeyDown={(e) => handleClear(e, i)}
-            onPaste={handlePaste}
+            onKeyDown={(e) => handleKeyDown(e, i)}
+            onPaste={handlepaste}
+            value={input[i]}
           />
         ))}
       </div>
-      <div className="flex justify-center mt-4">
-        <button
-          className="bg-purple-900 px-4 py-2 text-white rounded-md "
-          onClick={handleSunmit}
-        >
-          Submit
-        </button>
-      </div>
-    </div>
+      <button className="btn btn-primary" type="submit">
+        Submit
+      </button>
+    </form>
   );
 };
 export default OtpInput;
