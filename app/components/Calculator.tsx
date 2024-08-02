@@ -64,7 +64,7 @@ const Calculator = () => {
         <div className="relative">
           <input
             type="text"
-            className=" border-[1px] border-slate-400 my-4 w-[350px] h-[80px] outline-none rounded-md px-4 font-bold text-3xl "
+            className="input input-bordered input-lg w-full max-w-xs my-4 text-3xl font-bold "
             onChange={handleChange}
             value={showInputVal}
           />

@@ -55,18 +55,18 @@ const Page = () => {
       <div className=" h-[100vh] flex  items-center justify-center flex-col  gap-4">
         <h1 className="text-4xl font-serif  font-semibold">Tic Tac Toe</h1>
         <div
-          className="grid grid-cols-3 cursor-pointer border-[1px] border-black"
+          className="grid grid-cols-3 cursor-pointer "
           onClick={handleUserClick}
         >
           {matrixs.map((item, index) => (
             <div
               key={index}
               id={index.toString()}
-              className={`w-16 h-16 border-[1px] border-black  ${
-                wonerItem.includes(index) ? "bg-green-600" : "bg-slate-400"
+              className={`w-20 h-20 border-[1px] border-gray-100  ${
+                wonerItem.includes(index) ? "bg-green-600" : "bg-gray-500"
               } flex justify-center items-center  ${
-                wonerItem.includes(index) ? "" : "hover:bg-gray-500"
-              }  font-bold text-xl text-black`}
+                wonerItem.includes(index) ? "" : "hover:bg-slate-400"
+              }  font-bold text-3xl text-white`}
             >
               {item}
             </div>
@@ -79,20 +79,6 @@ const Page = () => {
           >
             Restart
           </button> */}
-          <button
-            className="btn  btn-sm btn-error "
-            onClick={() => setMatrixs(Array(9).fill(null))}
-          >
-            Restart
-          </button>
-          <div className=" font-serif font-semibold">
-            Next palyer:<span className="ml-2">{isXTurn ? "X" : "O"}</span>
-          </div>
-          {won && (
-            <div className="text-md font-serif font-semibold">
-              Player <span className="mr-2">{won}</span>Won the Game
-            </div>
-          )}
         </div>
       </div>
       {won && <Confetti width={width} height={height} />}
