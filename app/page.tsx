@@ -20,6 +20,11 @@ export default function Home() {
       redirectUrl: "/memorygame",
     },
     {
+      title: "Tic Tac Toe",
+      buttonLabel: "Visit",
+      redirectUrl: "/tictactoe",
+    },
+    {
       title: "Drag Drop",
       buttonLabel: "Visit",
       redirectUrl: "/dragdrop",
@@ -35,14 +40,14 @@ export default function Home() {
       redirectUrl: "/rating",
     },
     {
-      title: "Star Rating",
+      title: "OtpInput",
       buttonLabel: "Visit",
-      redirectUrl: "/rating",
+      redirectUrl: "/otpinput",
     },
     {
-      title: "Star Rating",
+      title: "Infinite Scrolling",
       buttonLabel: "Visit",
-      redirectUrl: "/rating",
+      redirectUrl: "/infinitescrolling",
     },
   ];
   const handleNavigate = (url: string) => {

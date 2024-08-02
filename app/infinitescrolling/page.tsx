@@ -100,7 +100,7 @@ const Page = () => {
 
       <div ref={loaderRef} className="">
         {loading ? (
-          <h1 className="text-2xl text-red-600 font-bold">Loading...</h1>
+          <span className="loading loading-bars loading-lg"></span>
         ) : (
           "dggd"
         )}
