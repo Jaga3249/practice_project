@@ -49,6 +49,11 @@ export default function Home() {
       buttonLabel: "Visit",
       redirectUrl: "/infinitescrolling",
     },
+    {
+      title: "Accordion",
+      buttonLabel: "Visit",
+      redirectUrl: "/accordion",
+    },
   ];
   const handleNavigate = (url: string) => {
     router.push(url);

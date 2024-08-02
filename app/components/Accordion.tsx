@@ -12,32 +12,32 @@ interface faqItemProps {
   key: number;
 }
 
-const FaqItem: React.FC<faqItemProps> = ({ faq, index, key }) => {
+const Accordion: React.FC<faqItemProps> = ({ faq, index, key }) => {
   const [show, setShow] = useState<boolean>(false);
   return (
     <div>
-      <div className="flex flex-col gap-1 cursor-pointer bg-blue-600 py-3 rounded-md">
+      <div className="flex flex-col gap-1 cursor-pointer bg-slate-200 py-3 rounded-md">
         <div className="flex items-center">
           {show ? (
             <RiArrowDownSFill
               onClick={() => setShow(!show)}
               size={35}
-              className="text-white"
+              className="text-gray-500"
             />
           ) : (
             <RiArrowRightSFill
               onClick={() => setShow(!show)}
               size={35}
-              className="text-white"
+              className="text-gray-500"
             />
           )}
-          <h1 onClick={() => setShow(!show)} className="text-white text-lg">
+          <h1 onClick={() => setShow(!show)} className="text-gray-500 text-lg">
             {faq.question}
           </h1>
         </div>
-        {show && <span className="pl-8 text-gray-200">{faq.answer}</span>}
+        {show && <span className="pl-8 text-gray-500">{faq.answer}</span>}
       </div>
     </div>
   );
 };
-export default FaqItem;
+export default Accordion;
