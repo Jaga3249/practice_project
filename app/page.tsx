@@ -64,6 +64,16 @@ export default function Home() {
       buttonLabel: "Visit",
       redirectUrl: "/cryptoconverter",
     },
+    {
+      title: "Product Filter",
+      buttonLabel: "Visit",
+      redirectUrl: "/productfilter",
+    },
+    {
+      title: "Custum Tabs",
+      buttonLabel: "Visit",
+      redirectUrl: "/customtabs",
+    },
   ];
   const handleNavigate = (url: string) => {
     router.push(url);
