@@ -54,6 +54,16 @@ export default function Home() {
       buttonLabel: "Visit",
       redirectUrl: "/accordion",
     },
+    {
+      title: "LatestJob",
+      buttonLabel: "Visit",
+      redirectUrl: "/latestjob",
+    },
+    {
+      title: "Crypto Converter",
+      buttonLabel: "Visit",
+      redirectUrl: "/cryptoconverter",
+    },
   ];
   const handleNavigate = (url: string) => {
     router.push(url);

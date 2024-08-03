@@ -13,12 +13,15 @@ interface JobPostType {
 const Page = () => {
   const [postIds, setPostIds] = useState<number[]>([]);
   const [postMetaData, setPostMetaData] = useState<JobPostType[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const getData = async (url: string) => {
     try {
-      const { data } = await axios.get(url);
-      return data;
+      const res = await axios.get(url);
+      if (res.status === 200) {
+        return res.data;
+      }
     } catch (error: any) {
       console.log("error", error.message);
     }
@@ -28,7 +31,7 @@ const Page = () => {
     const url = `https://hacker-news.firebaseio.com/v0/jobstories.json`;
     const data = await getData(url);
     const ids = data && data.splice(0, 9);
-    setPostIds(ids);
+    setPostIds(data);
     fetchMetaData(ids);
   };
 
@@ -92,6 +95,17 @@ const Page = () => {
     return formattedDate;
   };
 
+  const handleLoadMore = async () => {
+    setLoading(true);
+    const copyIds = [...postIds];
+    if (copyIds.length > 0) {
+      const ids = copyIds.splice(0, 6);
+      await fetchMetaData(ids);
+      setPostIds(copyIds);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
     fetchPostsIds();
   }, []);
@@ -120,9 +134,14 @@ const Page = () => {
             ))}
         </div>
       )}
-      {postMetaData.length > 0 && (
-        <button className="btn btn-secondary btn-lg">Load More</button>
-      )}
+      {postMetaData.length > 0 &&
+        (loading ? (
+          <span className="loading loading-bars loading-md"></span>
+        ) : (
+          <button className="btn btn-secondary btn-md" onClick={handleLoadMore}>
+            Load More
+          </button>
+        ))}
     </div>
   );
 };
