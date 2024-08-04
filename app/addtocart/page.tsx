@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { RiAddCircleFill } from "@remixicon/react";
 import { RiSubtractLine } from "@remixicon/react";
+import { RiCloseLargeLine } from "@remixicon/react";
 
 interface productType {
   id: number;
@@ -63,79 +64,114 @@ const Page = () => {
       });
       setCartItem(updatedItem);
     } else {
-      const copyItem = [...cartItem];
-      const updatedItem = copyItem.map((cartItem) => {
-        if (cartItem.id === item.id) {
-          return { ...cartItem, quantity: cartItem.quantity - 1 };
-        }
-        return cartItem;
-      });
-      setCartItem(updatedItem);
+      if (item.quantity === 1) {
+        const copyItem = [...cartItem];
+        const updatedItem = copyItem.filter(
+          (cartItem) => cartItem.id != item.id
+        );
+        setCartItem(updatedItem);
+      } else {
+        const copyItem = [...cartItem];
+        const updatedItem = copyItem.map((cartItem) => {
+          if (cartItem.id === item.id) {
+            return { ...cartItem, quantity: cartItem.quantity - 1 };
+          }
+          return cartItem;
+        });
+        setCartItem(updatedItem);
+      }
     }
+  };
+
+  const handleRemoveItem = (item: productType) => {
+    const copyItem = [...cartItem];
+    const updatedItem = copyItem.filter((cartItem) => cartItem.id != item.id);
+    setCartItem(updatedItem);
   };
 
   useEffect(() => {
     fetchProducts();
   }, []);
-  console.log(cartItem);
 
   return (
     <div className="h-screen flex flex-col gap-4 items-center py-10">
       <h1 className="font-serif font-semibold text-3xl">Add Product</h1>
       <div className="grid grid-cols-3 gap-10 ">
-        {productList.map((item, i) => (
-          <div className="card bg-base-100 w-80 shadow-xl" key={i}>
-            <div className="card-body items-center gap-4">
-              <h2 className="card-title text-lg">{item.title}</h2>
-              <p className="font-semibold">{item.category}</p>
-              {/* card section */}
-              {cartItem.some((cartItem) => cartItem.id === item.id) ? (
-                <div className="flex gap-4 ">
-                  {/* decrease button */}
-                  {(cartItem.find((cartItem) => cartItem.id === item.id)
-                    ?.quantity ?? 0) > 1 && (
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => handleQuantityChange(item, "decrease")}
+        {loading ? (
+          <span className="loading loading-bars loading-md text-center  "></span>
+        ) : (
+          <>
+            {productList.map((item, i) => (
+              <div className="card bg-base-100 w-80 shadow-xl" key={i}>
+                <div className="card-body items-center gap-4">
+                  <h2 className="card-title text-lg">{item.title}</h2>
+                  <p className="font-semibold">{item.category}</p>
+                  {/* card section */}
+                  {cartItem.some((cartItem) => cartItem.id === item.id) ? (
+                    <div className="flex gap-4 ">
+                      {/* decrease button */}
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => handleQuantityChange(item, "decrease")}
+                      >
+                        <RiSubtractLine />
+                      </button>
+
+                      {/* count button */}
+                      <button className="btn btn-primary font-bold text-xl ">
+                        {
+                          cartItem.find((cartItem) => cartItem.id === item.id)
+                            ?.quantity
+                        }
+                      </button>
+                      {/* increase button */}
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => handleQuantityChange(item, "increase")}
+                      >
+                        <RiAddCircleFill />
+                      </button>
+                    </div>
+                  ) : (
+                    <div
+                      className="card-actions justify-center"
+                      onClick={() => handleAddToCart(item)}
                     >
-                      <RiSubtractLine />
-                    </button>
+                      <button className="btn btn-primary">AddToCart</button>
+                    </div>
                   )}
-                  {/* count button */}
-                  <button className="btn btn-primary font-bold text-xl ">
-                    {
-                      cartItem.find((cartItem) => cartItem.id === item.id)
-                        ?.quantity
-                    }
-                  </button>
-                  {/* increase button */}
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => handleQuantityChange(item, "increase")}
-                  >
-                    <RiAddCircleFill />
-                  </button>
                 </div>
-              ) : (
-                <div
-                  className="card-actions justify-center"
-                  onClick={() => handleAddToCart(item)}
-                >
-                  <button className="btn btn-primary">AddToCart</button>
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
+              </div>
+            ))}
+          </>
+        )}
       </div>
 
-      {cartItem.map((item) => (
-        <div className="flex w-[76%] gap-4 items-center">
-          <div className="font-semibold text-md ">{item.title}</div>
-          <div className="font-semibold text-md ">{item.category}</div>
-          <div className="font-bold text-xl">{item.price}</div>
-          <div>
-            <button className="btn btn-active"> {item.quantity}</button>
+      {cartItem.map((item, i) => (
+        <div
+          className="flex w-[76%]  items-center justify-between cursor-pointer"
+          key={i}
+        >
+          <span className=" ">
+            <RiCloseLargeLine onClick={() => handleRemoveItem(item)} />
+          </span>
+          <div className="font-semibold text-md w-[40%]  ">{item.title}</div>
+          <div className="font-semibold text-md w-[20%]   ">
+            {item.category}
+          </div>
+          <div className="font-bold text-xl   w-[10%] ">{item.price}</div>
+          <div className="flex gap-2">
+            <button className="btn btn-active btn-md">
+              <RiSubtractLine
+                onClick={() => handleQuantityChange(item, "decrease")}
+              />
+            </button>
+            <button className="btn btn-active btn-md"> {item.quantity}</button>
+            <button className="btn btn-active btn-md">
+              <RiAddCircleFill
+                onClick={() => handleQuantityChange(item, "increase")}
+              />
+            </button>
           </div>
         </div>
       ))}

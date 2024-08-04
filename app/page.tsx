@@ -74,6 +74,16 @@ export default function Home() {
       buttonLabel: "Visit",
       redirectUrl: "/customtabs",
     },
+    {
+      title: "Add Cart Page",
+      buttonLabel: "Visit",
+      redirectUrl: "/addtocart",
+    },
+    {
+      title: "Debounce Suggestion",
+      buttonLabel: "Visit",
+      redirectUrl: "/debouncesuggestion",
+    },
   ];
   const handleNavigate = (url: string) => {
     router.push(url);
