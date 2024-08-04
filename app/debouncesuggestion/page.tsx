@@ -26,7 +26,6 @@ const Page = () => {
       setLoading(false);
     }
   };
-  console.log(suggestionLists);
 
   useEffect(() => {
     const url = `https://api.frontendeval.com/fake/food/${inputValue}`;
