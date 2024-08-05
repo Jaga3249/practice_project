@@ -84,6 +84,11 @@ export default function Home() {
       buttonLabel: "Visit",
       redirectUrl: "/debouncesuggestion",
     },
+    {
+      title: "Transfer Lists",
+      buttonLabel: "Visit",
+      redirectUrl: "/transferlists",
+    },
   ];
   const handleNavigate = (url: string) => {
     router.push(url);
