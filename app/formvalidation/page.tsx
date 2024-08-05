@@ -1,7 +1,5 @@
 "use client";
-import { Span } from "next/dist/trace";
 import { ChangeEvent, FormEvent, FormEventHandler, useState } from "react";
-
 interface InputField {
   id: string;
   label: string;
