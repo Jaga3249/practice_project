@@ -89,6 +89,11 @@ export default function Home() {
       buttonLabel: "Visit",
       redirectUrl: "/transferlists",
     },
+    {
+      title: "Pogress Bar",
+      buttonLabel: "Visit",
+      redirectUrl: "/pogressbar",
+    },
   ];
   const handleNavigate = (url: string) => {
     router.push(url);
