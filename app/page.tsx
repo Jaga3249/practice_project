@@ -94,6 +94,11 @@ export default function Home() {
       buttonLabel: "Visit",
       redirectUrl: "/pogressbar",
     },
+    {
+      title: "Image Carosel",
+      buttonLabel: "Visit",
+      redirectUrl: "/imagecarosel",
+    },
   ];
   const handleNavigate = (url: string) => {
     router.push(url);
