@@ -130,7 +130,7 @@ const Page = () => {
               )}
               {key === "confirmPassword" && !isPasswordMatch && (
                 <span className="text-base text-red-500 font-mono">
-                  password doesn't match
+                  {`password doesn't match`}
                 </span>
               )}
             </div>
