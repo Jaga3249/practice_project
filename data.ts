@@ -1,6 +1,13 @@
+import { Children } from "react";
+
 interface dataType {
   question: string;
   answer: string;
+}
+interface FileStrType {
+  name: string;
+  isFolder: Boolean;
+  Children?: FileStrType[];
 }
 interface filterDataType {
   name: string;
@@ -69,3 +76,46 @@ export const filterData: filterDataType[] = [
     category: "Sunglasses",
   },
 ];
+
+export const vscodeFolderStructure: FileStrType = {
+  name: "root",
+  isFolder: true,
+  Children: [
+    {
+      name: "src",
+      isFolder: true,
+      Children: [
+        {
+          name: "App.js",
+          isFolder: false,
+        },
+        {
+          name: "index.js",
+          isFolder: false,
+        },
+        {
+          name: "index.css",
+          isFolder: false,
+        },
+      ],
+    },
+    {
+      name: "public",
+      isFolder: true,
+      Children: [
+        {
+          name: "index.html",
+          isFolder: false,
+        },
+        {
+          name: "style.css",
+          isFolder: false,
+        },
+      ],
+    },
+    {
+      name: "package.json",
+      isFolder: false,
+    },
+  ],
+};
