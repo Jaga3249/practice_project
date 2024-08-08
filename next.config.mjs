@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ["static.vecteezy.com"], // Added the domain for external images
+    domains: ["static.vecteezy.com", "cdn.dummyjson.com"], // Added the domain for external images
   },
 };
 
