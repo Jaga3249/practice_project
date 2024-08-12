@@ -114,6 +114,10 @@ export default function Home() {
       title: "Stepper App",
       redirectUrl: "morgagecalculator",
     },
+    {
+      title: "Selected Grid",
+      redirectUrl: "selectedgrid",
+    },
   ];
   const handleNavigate = (url: string) => {
     router.push(url);
